@@ -1,9 +1,10 @@
+"use strict";
+
 const mongoose = require("mongoose");
-// const Schema = mongoose.Schema;
 
 const formSchema = new mongoose.Schema(
     {
-        name: {
+        nombre: {
             type: String,
             required: true,
         },
@@ -13,7 +14,7 @@ const formSchema = new mongoose.Schema(
         },
         phoneNumber: {
             type: Number,
-            required: false,
+            required: true,
         },
         address: {
             type: String,
@@ -34,5 +35,6 @@ const formSchema = new mongoose.Schema(
         },
     },
 );
+const Form = mongoose.model("Form", formSchema);
 
-module.exports = Form = mongoose.model("form", formSchema);
+module.exports = Form;
