@@ -3,15 +3,15 @@
 const express = require("express");
 
 /** Controlador de autenticación */
-const authController = require("../controllers/auth.controller.js");
+const authController = require("../controllers/auth.controller");
 
 /** Instancia del enrutador */
 const router = express.Router();
 
 // Define las rutas para la autenticación
-router.post("/login", authController.login);
-router.post("/logout", authController.logout);
-router.get("/refresh", authController.refresh);
+router.post("/POST/login", authController.login);
+router.post("/POST/logout", authController.logout);
+router.get("/GET/refresh", authController.refresh);
 
 // Exporta el enrutador
 module.exports = router;

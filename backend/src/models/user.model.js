@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema(
         ref: "Role",
       },
     ],
+    encargado: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Encargado",
+      },
+    ],
   },
   {
     versionKey: false,
