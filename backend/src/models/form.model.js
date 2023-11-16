@@ -28,11 +28,13 @@ const formSchema = new mongoose.Schema(
             type: Date,
             default: Date.now,
         },
-        status: {
-            type: String,
-            enum: ["pending", "approved", "rejected"],
-            default: "pending",
-        },
+        status: 
+            {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Status",
+            default: "65552313bc0d5d7a9ddf4b81",
+            },
+        
     },
 );
 const Form = mongoose.model("Form", formSchema);

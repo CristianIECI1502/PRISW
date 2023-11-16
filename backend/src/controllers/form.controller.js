@@ -16,7 +16,7 @@ async function getForms(req, res) {
 
         forms.length === 0
         ? respondSuccess(req, res, 204)
-        : respondSuccess(req, res, 200, forms);
+        : respondSuccess(req, res, 200, forms );
         } catch (error) {
             handleError(error, "form.controller -> getForms");
             respondError(req, res, 400, error.message);
