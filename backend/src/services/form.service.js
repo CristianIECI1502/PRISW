@@ -1,6 +1,7 @@
 "use strict";
 
 const Form = require("../models/form.model");
+const Status = require("../models/status.model");
 const { handleError } = require("../utils/errorHandler");
 
 /**
@@ -12,6 +13,7 @@ async function getForms() {
         const formData = await Form.find()
             .select("+status")
             .populate("dateSubmitted")
+            .populate("status", "name -_id")
             .exec();
         if (!formData) return [null, "No hay formularios"];
 
@@ -81,10 +83,14 @@ async function updateForm(id, form) {
 
         const { status } = form;
 
+        const statusFound = await Status.find( { name: { $in: status } } );
+        if (statusFound.length === 0) return [null, "El estado no existe"];
+        const myStatus = statusFound.map((status) => status._id);
+        console.log(statusFound);
         const formUpdated = await Form.findByIdAndUpdate(
             id,
             {
-                status,
+                status: myStatus,
             },
             { new: true },
         );
