@@ -16,7 +16,7 @@ async function getForms(req, res) {
 
         forms.length === 0
         ? respondSuccess(req, res, 204)
-        : respondSuccess(req, res, 200, forms);
+        : respondSuccess(req, res, 200, forms );
         } catch (error) {
             handleError(error, "form.controller -> getForms");
             respondError(req, res, 400, error.message);
@@ -59,7 +59,7 @@ async function getFormById(req, res) {
         const { error: paramError } = formIdSchema.validate(params);
         if (paramError) return respondError(req, res, 400, paramError.message);
 
-        const [form, errorForm] = await FormService.getForms( params.id );
+        const [form, errorForm] = await FormService.getFormById( params.id );
 
         if (errorForm) return respondError(req, res, 404, errorForm);
 
