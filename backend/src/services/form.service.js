@@ -87,7 +87,7 @@ async function updateForm(id, form) {
         const statusFound = await Status.find( { name: { $in: status } } );
         if (statusFound.length === 0) return [null, "El estado no existe"];
         const myStatus = statusFound.map((status) => status._id);
-        console.log(statusFound);
+        
         const formUpdated = await Form.findByIdAndUpdate(
             id,
             {
