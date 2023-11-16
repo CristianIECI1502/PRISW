@@ -11,7 +11,8 @@ const { handleError } = require("../utils/errorHandler");
 async function getForms() {
     try {
         const formData = await Form.find()
-            .select("+status")
+            .select("estado +status")
+            .select("nombre")
             .populate("dateSubmitted")
             .populate("status", "name -_id")
             .exec();
@@ -58,7 +59,7 @@ async function createForm(form) {
 async function getFormById(id) {
     try {
         const form = await Form.findById({ _id: id })
-        .select("-status")
+        .populate("status", "-_id")
         .populate("dateSubmitted")
         .exec();
 
