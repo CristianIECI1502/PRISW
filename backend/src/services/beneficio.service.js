@@ -1,7 +1,12 @@
 "use strict";
-// Importa el modelo de datos 'beneficio'
+
 const Beneficio = require("../models/beneficio.model.js");
 const { handleError } = require("../utils/errorHandler");
+
+/**
+ * Expresión  para validar que no haya símbolos.
+ */
+const noSymbolsRegex = /^[a-zA-Z0-9 ]*$/;
 
 /**
  * Obtiene todos los beneficio de la base de datos
@@ -25,14 +30,32 @@ async function getBeneficios() {
  */
 async function createBeneficio(beneficio) {
   try {
-    const { beneficioname, descripcion } = beneficio;
+    const { beneficioname, descripcion, empresaAsociada, 
+           descuento, fechaInicio, fechaFin } = beneficio;
 
-    const beneficioFound = await Beneficio.findOne({ beneficioname: beneficio.beneficioname });
+    // Validaciones
+    if (!noSymbolsRegex.test(beneficioname)) {
+      return [null, "El nombre de beneficio no puede contener símbolos."];
+    }
+
+    if (!noSymbolsRegex.test(descripcion)) {
+      return [null, "La descripción no puede contener símbolos."];
+    }
+
+    if (!noSymbolsRegex.test(empresaAsociada)) {
+      return [null, "El nombre de la empresa o tienda no puede contener símbolos."];
+    }
+
+    const beneficioFound = await Beneficio.findOne({ beneficioname });
     if (beneficioFound) return [null, "El beneficio ya existe"];
 
     const newBeneficio = new Beneficio({
       beneficioname,
       descripcion,
+      empresaAsociada,
+      descuento,
+      fechaInicio,
+      fechaFin,
     });
     await newBeneficio.save();
 
@@ -72,6 +95,15 @@ async function updateBeneficio(id, beneficio) {
     if (!beneficioFound) return [null, "El beneficio no existe"];
 
     const { beneficioname, descripcion } = beneficio;
+
+    // Validaciones
+    if (!noSymbolsRegex.test(beneficioname)) {
+      return [null, "El nombre de beneficio no puede contener símbolos."];
+    }
+
+    if (!noSymbolsRegex.test(descripcion)) {
+      return [null, "La descripción no puede contener símbolos."];
+    }
 
     const beneficioUpdated = await Beneficio.findByIdAndUpdate(
       id,

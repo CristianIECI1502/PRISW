@@ -6,18 +6,18 @@ const { beneficioBodySchema, beneficioIdSchema } = require("../schema/beneficio.
 const { handleError } = require("../utils/errorHandler");
 
 /**
- * Obtiene todos los usuario
+ * Obtiene todos los beneficios
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  */
 async function getBeneficio(req, res) {
   try {
-    const [usuarios, errorUsuarios] = await beneficioService.getBeneficios();
-    if (errorUsuarios) return respondError(req, res, 404, errorUsuarios);
+    const [beneficios, errorBeneficios] = await beneficioService.getBeneficios();
+    if (errorBeneficios) return respondError(req, res, 404, errorBeneficios);
 
-    usuarios.length === 0
+    beneficios.length === 0
       ? respondSuccess(req, res, 204)
-      : respondSuccess(req, res, 200, usuarios);
+      : respondSuccess(req, res, 200, beneficios);
   } catch (error) {
     handleError(error, "beneficio.controller -> getBeneficios");
     respondError(req, res, 400, error.message);
@@ -25,13 +25,15 @@ async function getBeneficio(req, res) {
 }
 
 /**
- * Crea un nuevo usuario
+ * Crea un nuevo beneficio
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  */
 async function createBeneficio(req, res) {
   try {
     const { body } = req;
+
+    // Validar el cuerpo de la solicitud usando beneficioBodySchema
     const { error: bodyError } = beneficioBodySchema.validate(body);
     if (bodyError) return respondError(req, res, 400, bodyError.message);
 
@@ -39,24 +41,26 @@ async function createBeneficio(req, res) {
 
     if (beneficioError) return respondError(req, res, 400, beneficioError);
     if (!newBeneficio) {
-      return respondError(req, res, 400, "No se creo el beneficio");
+      return respondError(req, res, 400, "No se creó el beneficio");
     }
 
     respondSuccess(req, res, 201, newBeneficio);
   } catch (error) {
     handleError(error, "beneficio.controller -> createBeneficio");
-    respondError(req, res, 500, "No se creo el beneficio");
+    respondError(req, res, 500, "No se creó el beneficio");
   }
 }
 
 /**
- * Obtiene un usuario por su id
+ * Obtiene un beneficio por su id
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  */
 async function getBeneficioById(req, res) {
   try {
     const { params } = req;
+
+    // Validar los parámetros usando beneficioIdSchema
     const { error: paramsError } = beneficioIdSchema.validate(params);
     if (paramsError) return respondError(req, res, 400, paramsError.message);
 
@@ -72,17 +76,19 @@ async function getBeneficioById(req, res) {
 }
 
 /**
- * Actualiza un usuario por su id
+ * Actualiza un beneficio por su id
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  */
 async function updateBeneficio(req, res) {
   try {
     const { params, body } = req;
-    const { error: paramsError } = beneficioIdSchema.validate(params);
-    if (paramsError) return respondError(req, res, 400, paramsError.message);
 
+    // Validar los parámetros y el cuerpo de la solicitud usando beneficioIdSchema y beneficioBodySchema
+    const { error: paramsError } = beneficioIdSchema.validate(params);
     const { error: bodyError } = beneficioBodySchema.validate(body);
+
+    if (paramsError) return respondError(req, res, 400, paramsError.message);
     if (bodyError) return respondError(req, res, 400, bodyError.message);
 
     const [beneficio, beneficioError] = await beneficioService.updateBeneficio(params.id, body);
@@ -97,13 +103,15 @@ async function updateBeneficio(req, res) {
 }
 
 /**
- * Elimina a un beneficio por su id
+ * Elimina un beneficio por su id
  * @param {Object} req - Objeto de petición
  * @param {Object} res - Objeto de respuesta
  */
 async function deleteBeneficio(req, res) {
   try {
     const { params } = req;
+
+    // Validar los parámetros usando beneficioIdSchema
     const { error: paramsError } = beneficioIdSchema.validate(params);
     if (paramsError) return respondError(req, res, 400, paramsError.message);
 
@@ -113,12 +121,12 @@ async function deleteBeneficio(req, res) {
           req,
           res,
           404,
-          "No se encontro el beneficio solicitado",
-          "Verifique el id ingresado",
+          "No se encontró el beneficio solicitado",
+          "Verifique el ID ingresado",
         )
       : respondSuccess(req, res, 200, beneficio);
   } catch (error) {
-    handleError(error, "beneficio.controller -> deletebeneficio");
+    handleError(error, "beneficio.controller -> deleteBeneficio");
     respondError(req, res, 500, "No se pudo eliminar el beneficio");
   }
 }
