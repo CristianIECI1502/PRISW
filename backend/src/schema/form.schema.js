@@ -53,16 +53,21 @@ const formBodySchema = Joi.object({
         "string.base": "Direccion debe ser de tipo String",
         "string.pattern.base": "La direccion puede contener caracteres alfabéticos, números y #",
     }),
-    message: Joi.string(). required(). messages({
-        "string.empty": "Mensaje no puede estar vacio",
-        "any.required": "Mensaje es requerido",
-        "string.base": "Mensaje debe ser de tipo String",
-    }),
-    phoneNumber: Joi.number().integer().max(999999999).required().messages({
+    message: Joi.string()
+        .required()
+        .pattern(new RegExp("[A-Za-z]"))
+        .messages({
+            "string.empty": "Mensaje no puede estar vacio",
+            "any.required": "Mensaje es requerido",
+            "string.base": "Mensaje debe ser de tipo String",
+            "string.pattern.base": "Mensaje no puede contener solo números o símbolos",
+        }),
+    phoneNumber: Joi.number().integer().min(100000000).max(999999999).required().messages({
         "number.base": "El número de teléfono debe ser un número",
         "number.empty": "El número de teléfono no puede estar vacío",
         "any.required": "El número de teléfono es obligatorio",
-        "number.max": "El número de teléfono no puede tener más de 9 dígitos",
+        "number.min": "El número de teléfono debe tener 9 dígitos",
+        "number.max": "El número de teléfono debe tener 9 dígitos",
         "number.integer": "El número de teléfono debe ser un número entero",
     }),
     date: Joi.date(). default(Date.now),
