@@ -6,22 +6,39 @@ const { handleError } = require("../utils/errorHandler");
 
 /**
  * Obtiene todos los Formularios de la base de datos
- * @returns {Promise} Promesa con el objeto de los fromularios
+ * @param {Object} filters - Filtros para la búsqueda
+ * @returns {Promise} Promesa con el objeto de los formularios
  */
-async function getForms() {
+async function getForms(filters) {
     try {
-        const formData = await Form.find()
+        const query = Form.find();
+
+        if (filters.nombre) {
+            query.where("nombre").equals(filters.nombre);
+        }
+
+        if (filters.status) {
+            query.where("status").equals(filters.status);
+        }
+
+        if (filters.rut) {
+            query.where("rut").equals(filters.rut);
+        }
+
+        const formData = await query
             .select("estado +status")
             .select("nombre")
+            .select("rut")
             .populate("dateSubmitted")
             .populate("status", "name -_id")
             .exec();
+
         if (!formData) return [null, "No hay formularios"];
 
         return [formData, null];
-        } catch (error) {
-            handleError(error, "user.service -> getUsers");
-        }
+    } catch (error) {
+        handleError(error, "form.service -> getForms");
+    }
 };
 
 /**
@@ -31,13 +48,14 @@ async function getForms() {
  */
 async function createForm(form) {
     try {
-        const { nombre, email, phoneNumber, address, message } = form;
+        const { nombre, rut, email, phoneNumber, address, message } = form;
 
-        const formFound = await Form.findOne({ email: form.email });
+        const formFound = await Form.findOne({ rut: form.rut });
         if (formFound) return [null, "El postulante ya existe"];
 
         const newForm = new Form({
             nombre,
+            rut,
             email,
             phoneNumber,
             address,

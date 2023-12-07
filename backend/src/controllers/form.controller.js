@@ -11,16 +11,17 @@ const { formIdSchema, formBodySchema } = require("../schema/form.schema");
  */
 async function getForms(req, res) {
     try {
-        const [forms, errorForms] = await FormService.getForms();
+        const filters = req.query;
+        const [forms, errorForms] = await FormService.getForms(filters);
         if (errorForms) return respondError(req, res, 404, errorForms);
 
         forms.length === 0
         ? respondSuccess(req, res, 204)
         : respondSuccess(req, res, 200, forms );
-        } catch (error) {
-            handleError(error, "form.controller -> getForms");
-            respondError(req, res, 400, error.message);
-        }
+    } catch (error) {
+        handleError(error, "form.controller -> getForms");
+        respondError(req, res, 400, error.message);
+    }
 };
 
 /**

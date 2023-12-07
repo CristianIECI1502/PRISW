@@ -13,6 +13,34 @@ const formBodySchema = Joi.object({
         "string.base": "El nombre del postulante debe ser de tipo String",
         "string.pattern.base": "El nombre solo debe contener caracteres alfabéticos",
     }),
+    rut: Joi.string().pattern(/^\d{1,2}\.\d{3}\.\d{3}-[\dkK]{1}$/).required().messages({
+        "string.empty": "El RUT no puede estar vacío",
+        "any.required": "El RUT es obligatorio",
+        "string.base": "El RUT debe ser de tipo String",
+        "string.pattern.base": "El formato del RUT no es válido. Debe ser '12.345.678-9'",
+    }).custom((value, helpers) => {
+        const rut = value.replace(/[.\-kK]/g, "");
+        const rutDigits = parseInt(rut.slice(0, -1), 10);
+        const verifierDigit = rut.slice(-1).toUpperCase();
+
+        let sum = 0;
+        let multiplier = 2;
+
+        for (let i = rutDigits.toString().length - 1; i >= 0; i--) {
+            sum += rutDigits.toString().charAt(i) * multiplier;
+            multiplier = multiplier % 7 === 0 ? 2 : multiplier + 1;
+        }
+
+        const calculatedVerifierDigit = 11 - (sum % 11);
+        // eslint-disable-next-line max-len
+        const calculatedVerifierDigitString = calculatedVerifierDigit === 10 ? "K" : calculatedVerifierDigit === 11 ? "0" : calculatedVerifierDigit.toString();
+
+        if (calculatedVerifierDigitString !== verifierDigit) {
+            return helpers.error("number.base");
+        }
+
+        return value;
+    }).message("El RUT ingresado no es válido"),
     email: Joi.string().email().required().messages({
         "string.empty": "La dirección de correo electronico no puede estar vacia",
         "string.email": "Formato incorrecto, por favor ingrese un correo electronico valido",
@@ -25,16 +53,21 @@ const formBodySchema = Joi.object({
         "string.base": "Direccion debe ser de tipo String",
         "string.pattern.base": "La direccion puede contener caracteres alfabéticos, números y #",
     }),
-    message: Joi.string(). required(). messages({
-        "string.empty": "Mensaje no puede estar vacio",
-        "any.required": "Mensaje es requerido",
-        "string.base": "Mensaje debe ser de tipo String",
-    }),
-    phoneNumber: Joi.number().integer().max(999999999).required().messages({
+    message: Joi.string()
+        .required()
+        .pattern(new RegExp("[A-Za-z]"))
+        .messages({
+            "string.empty": "Mensaje no puede estar vacio",
+            "any.required": "Mensaje es requerido",
+            "string.base": "Mensaje debe ser de tipo String",
+            "string.pattern.base": "Mensaje no puede contener solo números o símbolos",
+        }),
+    phoneNumber: Joi.number().integer().min(100000000).max(999999999).required().messages({
         "number.base": "El número de teléfono debe ser un número",
         "number.empty": "El número de teléfono no puede estar vacío",
         "any.required": "El número de teléfono es obligatorio",
-        "number.max": "El número de teléfono no puede tener más de 9 dígitos",
+        "number.min": "El número de teléfono debe tener 9 dígitos",
+        "number.max": "El número de teléfono debe tener 9 dígitos",
         "number.integer": "El número de teléfono debe ser un número entero",
     }),
     date: Joi.date(). default(Date.now),
