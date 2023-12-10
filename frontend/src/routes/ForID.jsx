@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getFormById } from "../services/form.service";
+import { getFormById, editForm } from "../services/form.service";
 import { Button, Center, Stack } from '@chakra-ui/react';
 import { ArrowForwardIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
 const ForID = () => {
     const [form, setForm] = useState(null);
+    const [showEvaluationButtons, setShowEvaluationButtons] = useState(false);
     const { _id } = useParams();
     const navigate = useNavigate();
 
@@ -22,6 +23,21 @@ const ForID = () => {
 
         fetchForm();
     }, [_id]);
+
+    const handleEvaluationClick = () => {
+        setShowEvaluationButtons(true);
+    };
+
+    const handleStatusChange = async (newStatus) => {
+        const updatedForm = { ...form, status: { name: newStatus } };
+        const result = await editForm(_id, updatedForm);
+        if (result.state === 'Success') {
+            setForm(result.data);
+            setShowEvaluationButtons(false);
+        } else {
+            console.error('Error al actualizar el estado del formulario');
+        }
+    };
 
     return (
         <div>
@@ -40,9 +56,19 @@ const ForID = () => {
                         <Button leftIcon={<ArrowLeftIcon />} colorScheme='teal' variant='solid' onClick={(()=> navigate('/forms'))}>
                             Volver a formularios
                         </Button>
-                        <Button rightIcon={<ArrowForwardIcon />} colorScheme='teal' variant='outline'>
-                            Call us
+                        <Button rightIcon={<ArrowForwardIcon />} colorScheme='teal' variant='outline' onClick={handleEvaluationClick}>
+                            Evaluar
                         </Button>
+                        {showEvaluationButtons && (
+                            <Stack direction='row' spacing={4}>
+                                <Button colorScheme='red' variant='solid' onClick={() => handleStatusChange('Rechazado')}>
+                                    Rechazado
+                                </Button>
+                                <Button colorScheme='green' variant='solid' onClick={() => handleStatusChange('Aprobado')}>
+                                    Aprobado
+                                </Button>
+                            </Stack>
+                        )}
                     </Stack>
                 </div>
             )}

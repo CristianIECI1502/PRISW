@@ -33,3 +33,53 @@ export const getFormById = async (id) => {
         return { state: 'Error' };
     }
 };
+
+export const deleteForm = async (id) => {
+    try {
+        const response = await axios.delete(`forms/${id}`);
+        const { status } = response;
+        if (status === 200) {
+            return { state: 'Success' };
+        } else {
+            console.error('Server did not return the expected data');
+            return { state: 'Error' };
+        }
+    } catch (error) {
+        console.error(error);
+        return { state: 'Error' };
+    }
+};
+
+export const editForm = async (id, formData) => {
+    try {
+        const response = await axios.put(`forms/${id}`, formData);
+        const { status, data } = response;
+        if (status === 200) {
+            console.log(data);
+            return { state: 'Success', data: data.data };
+        } else {
+            console.error('Server did not return the expected data');
+            return { state: 'Error' };
+        }
+    } catch (error) {
+        console.error(error);
+        return { state: 'Error' };
+    }
+};
+
+export const createForm = async (formData) => {
+    try {
+        const response = await axios.post('forms/', formData);
+        const { status, data } = response;
+        if (status === 200) {
+            console.log(data);
+            return { state: 'Success', data: data.data };
+        } else {
+            console.error('Server did not return the expected data');
+            return { state: 'Error' };
+        }
+    } catch (error) {
+        console.error(error);
+        return { state: 'Error' };
+    }
+};
