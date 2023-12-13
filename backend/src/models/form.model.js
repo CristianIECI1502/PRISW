@@ -32,6 +32,10 @@ const formSchema = new mongoose.Schema(
             type: Date,
             default: Date.now,
         },
+        dateModified: {
+            type: Date,
+            default: Date.now,
+        },
         status: 
             {
             type: mongoose.Schema.Types.ObjectId,
@@ -41,6 +45,7 @@ const formSchema = new mongoose.Schema(
         
     },
 );
+
 const Form = mongoose.model("Form", formSchema);
 
 module.exports = Form;

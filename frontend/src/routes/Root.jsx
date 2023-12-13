@@ -2,6 +2,9 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../services/auth.service';
 import { AuthProvider, useAuth } from '../context/AuthContext';
+import { Box, Button, Container, Heading, Text, Flex, Spacer, IconButton } from '@chakra-ui/react';
+import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
+import { useState } from 'react';
 
 function Root() {
   return (
@@ -13,6 +16,7 @@ function Root() {
 
 function PageRoot() {
   const navigate = useNavigate();
+  const [showDetails, setShowDetails] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -22,14 +26,29 @@ function PageRoot() {
   const { user } = useAuth();
 
   return (
-    <div>
-      <div>
-        <h1>Aqui deberia ir un header</h1>
-        <p>Estas logeado como: {user.email}</p>
-        <button onClick={handleLogout}>Cerrar sesion</button>
-      </div>
+    <nav>
+      <Container>
+      <Box bgColor={""}>
+        <Flex align="center">
+          <Heading color={""}>Tarjeta Vecina</Heading>
+          <IconButton 
+            icon={showDetails ? <ChevronUpIcon /> : <ChevronDownIcon />} 
+            onClick={() => setShowDetails(!showDetails)}
+          />
+        </Flex>
+        {showDetails && (
+          <Box mt={2}>
+            <Flex align="center">
+              <Text>Estas logeado como: {user.email}</Text>
+              <Spacer />
+              <Button onClick={handleLogout}>Cerrar sesion</Button>
+            </Flex>
+          </Box>
+        )}
+      </Box>
+      </Container>
       <Outlet />
-    </div>
+    </nav>
   );
 }
 
