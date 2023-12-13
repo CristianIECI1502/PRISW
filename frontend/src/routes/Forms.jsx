@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getForms, getFormById } from "../services/form.service";
-import { Badge, Box, Button, Input, VStack } from '@chakra-ui/react'
+import { Badge, Box, Button, Heading, Input, VStack } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 const Forms = () => {
     const [forms, setForms] = useState([]);
@@ -55,10 +56,11 @@ const Forms = () => {
                 {filteredForms.map((form, index) => (
                 <div key={index}>
                     <Box>
-                    <h2>{form.rut}</h2>
+                    <Heading>{form.rut}</Heading>
                     <p>{form.nombre}</p>
-                    <Badge colorScheme="Blue">Estado: {form.status.name}</Badge>
-                    <p>Fecha de creación: {form.dateSubmitted}</p>
+                    <Badge colorScheme="blue">Estado: {form.status.name}</Badge>
+                    <p>Fecha de creación: {moment(form.dateSubmitted).format('DD/MM/YYYY')}</p>
+                    <p>Fecha de actualización: {moment(form.dateModified).format('DD/MM/YYYY')}</p>
                     <Button onClick={() => handleViewForm(form._id)}>Ver Peticion</Button>
                     </Box>
                 </div>

@@ -100,26 +100,28 @@ async function updateForm(id, form) {
         const formFound = await Form.findById(id);
         if (!formFound) return [null, "No se encontró el formulario a actualizar"];
 
-        const { status } = form;
+        const { status, name = formFound.nombre } = form;
 
         const statusFound = await Status.find( { name: { $in: status } } );
         if (statusFound.length === 0) return [null, "El estado no existe"];
         const myStatus = statusFound.map((status) => status._id);
         
+        // Actualiza la fecha de modificación
+        form.dateModified = Date.now();
+
+        const updateData = { status: myStatus, dateModified: form.dateModified, name };
+
         const formUpdated = await Form.findByIdAndUpdate(
             id,
-            {
-                status: myStatus,
-            },
+            { $set: updateData },
             { new: true },
         );
 
         return [formUpdated, null];
-        } catch (error) {
-            handleError(error, "form.service -> updateForm");
-        }
+    } catch (error) {
+        handleError(error, "form.service -> updateForm");
+    }
 }
-
 /**
  * Elimina un formulario por su id de la base de datos
  * @param {string} Id del formulario

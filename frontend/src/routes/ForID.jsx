@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const ForID = () => {
     const [form, setForm] = useState(null);
     const [showEvaluationButtons, setShowEvaluationButtons] = useState(false);
+    const [roleName, setRoleName] = useState(''); // Agrega un estado para roleName
     const { _id } = useParams();
     const navigate = useNavigate();
 
@@ -21,6 +22,10 @@ const ForID = () => {
             }
         };
 
+        const user = JSON.parse(localStorage.getItem('user')); // Parsea el valor almacenado en 'user'
+        const roles = user.roles; // Accede al campo 'roles'
+        setRoleName(roles[0].name); // Accede al campo 'name' del primer rol y lo guarda en el estado
+
         fetchForm();
     }, [_id]);
 
@@ -28,17 +33,20 @@ const ForID = () => {
         setShowEvaluationButtons(true);
     };
 
-    const handleStatusChange = async (newStatus) => {
-        const updatedForm = { ...form, status: { name: newStatus } };
-        const result = await editForm(_id, updatedForm);
-        if (result.state === 'Success') {
-            setForm(result.data);
-            setShowEvaluationButtons(false);
+    const handleStatusChange = async (statusName) => {
+        const formData = {
+            status: statusName,
+        };
+        const response = await editForm(form._id, formData);
+        if (response.state === 'Success') {
+            setForm(response.data);
+            window.location.reload(); // Refresca la página
+            window.alert(`Estado cambiado a ${statusName}`); // Muestra una alerta
         } else {
-            console.error('Error al actualizar el estado del formulario');
+            console.error(response.message);
         }
     };
-
+    
     return (
         <div>
             <Center>
@@ -56,15 +64,21 @@ const ForID = () => {
                         <Button leftIcon={<ArrowLeftIcon />} colorScheme='teal' variant='solid' onClick={(()=> navigate('/forms'))}>
                             Volver a formularios
                         </Button>
-                        <Button rightIcon={<ArrowForwardIcon />} colorScheme='teal' variant='outline' onClick={handleEvaluationClick}>
+                        <Button 
+                            rightIcon={<ArrowForwardIcon />} 
+                            colorScheme='teal' 
+                            variant='outline' 
+                            onClick={handleEvaluationClick}
+                            style={{ display: roleName === 'user' ? 'none' : 'inline-block' }}
+                        >
                             Evaluar
                         </Button>
                         {showEvaluationButtons && (
                             <Stack direction='row' spacing={4}>
-                                <Button colorScheme='red' variant='solid' onClick={() => handleStatusChange('Rechazado')}>
+                                <Button colorScheme='red' variant='solid' onClick={() => handleStatusChange("Rechazado")}>
                                     Rechazado
                                 </Button>
-                                <Button colorScheme='green' variant='solid' onClick={() => handleStatusChange('Aprobado')}>
+                                <Button colorScheme='green' variant='solid' onClick={() => handleStatusChange("Aprobado")}>
                                     Aprobado
                                 </Button>
                             </Stack>

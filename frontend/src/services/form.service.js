@@ -52,6 +52,7 @@ export const deleteForm = async (id) => {
 
 export const editForm = async (id, formData) => {
     try {
+        console.log(formData);
         const response = await axios.put(`forms/${id}`, formData);
         const { status, data } = response;
         if (status === 200) {
@@ -62,7 +63,7 @@ export const editForm = async (id, formData) => {
             return { state: 'Error' };
         }
     } catch (error) {
-        console.error(error);
+        console.error(error.response.data); // Log the server's response
         return { state: 'Error' };
     }
 };

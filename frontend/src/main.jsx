@@ -2,11 +2,13 @@ import ReactDOM from 'react-dom/client';
 import App from './routes/App.jsx';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ChakraProvider } from "@chakra-ui/react";
 import Root from './routes/Root.jsx';
 import ErrorPage from './routes/ErrorPage.jsx';
 import Login from './routes/Login.jsx';
 import Forms from './routes/Forms.jsx';
 import ForID from './routes/ForID.jsx';
+import Figma from './routes/figma.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,14 +28,25 @@ const router = createBrowserRouter([
   },
   {
     path: '/forms',
-    element: <Forms />,
+    element: <Root/>,
+    children: [{
+      path:'/forms',
+      element: <Forms />,
+    },
+    ],
   },
   {
     path: '/forms/:_id',
     element: <ForID/>,
   },
+  {
+    path: '/figma',
+    element: <Figma/>,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <ChakraProvider>
+    <RouterProvider router={router} />
+  </ChakraProvider>
 );
