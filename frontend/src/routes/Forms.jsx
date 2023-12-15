@@ -36,12 +36,13 @@ const Forms = () => {
             const response = await getForms();
             if (response.state === 'Success' && Array.isArray(response.data)) {
                 let sortedData;
+                const statusOrder = { 'Pendiente': 1, 'Rechazado': 2, 'Aprobado': 3 };
                 switch (sortType) {
                     case 'date':
                         sortedData = response.data.sort((a, b) => new Date(b.dateSubmitted) - new Date(a.dateSubmitted));
                         break;
                     case 'status':
-                        sortedData = response.data.sort((a, b) => a.status.name.localeCompare(b.status.name));
+                        sortedData = response.data.sort((a, b) => statusOrder[a.status.name] - statusOrder[b.status.name]);
                         break;
                     case 'name':
                         sortedData = response.data.sort((a, b) => a.nombre.localeCompare(b.nombre));
@@ -54,11 +55,9 @@ const Forms = () => {
                 console.error('getForms did not return an array');
             }
         };
-    
+
         fetchData();
     }, [sortType]); // Agrega sortType como dependencia
-    
-
     const handleViewForm = async (_id) => {
         if (_id) { // Asegúrate de que _id existe y no es undefined
             const result = await getFormById(_id);
