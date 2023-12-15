@@ -1,3 +1,4 @@
+import { Heading, Image, Text } from '@chakra-ui/react';
 import { useRouteError } from 'react-router-dom';
 
 const ErrorPage = () => {
@@ -16,8 +17,9 @@ const ErrorPage = () => {
 
   return (
     <div>
-      <h1>Oops!</h1>
-      <p>Sorry, un error inesperado a ocurrido.</p>
+      <Heading>Oops!</Heading>
+      <Text>Sorry, un error inesperado a ocurrido.</Text>
+        <Image src='https://64.media.tumblr.com/63958cc214ae5a42aa4899c91d6d3a52/485e069769d4c71f-28/s1280x1920/4bcca21dde5eaa35d539dc2376faeecc07ee4647.jpg' alt='Dan Abramov' />
     </div>
   );
 };

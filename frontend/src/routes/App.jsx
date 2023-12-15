@@ -10,7 +10,7 @@ function App() {
         <h1>Pagina principal</h1>
         <h2>Bienvenido a la pagina principal</h2>
         <Button borderRadius="md" onClick={(()=> navigate ("/forms"))}>Ver Postulaciones</Button>
-        <Button borderRadius="md" colorScheme='blue' size={"md"}>Button</Button>
+        <Button borderRadius="md" colorScheme='twitter' size={"md"} onClick={(()=> navigate("/postF"))}>Crear Postulacion</Button>
         <Button onClick={toggleColorMode}>
           Cambiar a {colorMode === "light" ? "Dark" : "Light"} Theme
         </Button>

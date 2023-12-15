@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../services/auth.service';
 import { AuthProvider, useAuth } from '../context/AuthContext';
-import { Box, Button, Container, Heading, Text, Flex, Spacer, IconButton } from '@chakra-ui/react';
+import { Box, Button, Heading, Text, Flex, Spacer, IconButton } from '@chakra-ui/react';
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons';
 import { useState } from 'react';
 
@@ -27,11 +27,11 @@ function PageRoot() {
 
   return (
     <nav>
-      <Container>
-      <Box bgColor={""}>
+      
+      <Box bgColor={"#9CDEE7"}>
         <Flex align="center">
           <Heading color={""}>Tarjeta Vecina</Heading>
-          <IconButton 
+          <IconButton colorScheme='orange'
             icon={showDetails ? <ChevronUpIcon /> : <ChevronDownIcon />} 
             onClick={() => setShowDetails(!showDetails)}
           />
@@ -41,12 +41,11 @@ function PageRoot() {
             <Flex align="center">
               <Text>Estas logeado como: {user.email}</Text>
               <Spacer />
-              <Button onClick={handleLogout}>Cerrar sesion</Button>
+              <Button colorScheme='red' onClick={handleLogout}>Cerrar sesion</Button>
             </Flex>
           </Box>
         )}
       </Box>
-      </Container>
       <Outlet />
     </nav>
   );

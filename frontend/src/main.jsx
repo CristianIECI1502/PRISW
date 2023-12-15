@@ -9,6 +9,7 @@ import Login from './routes/Login.jsx';
 import Forms from './routes/Forms.jsx';
 import ForID from './routes/ForID.jsx';
 import Figma from './routes/figma.jsx';
+import CrForm from './routes/CrForm.jsx';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,15 @@ const router = createBrowserRouter([
     path: '/figma',
     element: <Figma/>,
   },
+  {
+    path: '/',
+    element: <Root/>,
+    children: [{
+      path:'/postF',
+      element: <CrForm />,
+    },
+    ],
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -1,14 +1,13 @@
-import { Box } from "@chakra-ui/react";
 
 function Figma () {
     return(
-<div style={{width: '100%vw', height: '100%vh', position: 'relative', background: '#B48CD4'}}>
-    <Box style={{width: '100vw', height: 'calc(100-20vh)', position: 'absolute', background: '#9CDEE7'}} />
+<div style={{width: '100%', height: '100%', position: 'relative', background: '#B48CD4'}}>
+    <div style={{width: 1512, height: 170, left: 0, top: 0, position: 'absolute', background: '#9CDEE7'}} />
     <div style={{width: 412, left: 67, top: 92, position: 'absolute', color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word'}}>Estas logeado como: admin@email.com</div>
     <div style={{left: 60, top: 26, position: 'absolute', color: 'black', fontSize: 32, fontFamily: 'Inter', fontWeight: '700', wordWrap: 'break-word'}}>Tarjeta Vecina</div>
-    <div style={{width: '100vw', height: 'calc(100-20vh)', position: 'absolute', top:'20vh', background: '#CCE696'}} />
+    <div style={{width: 1512, height: 211, left: 0, top: 170, position: 'absolute', background: '#CCE696'}} />
     <div style={{left: 67, top: 226, position: 'absolute', color: 'black', fontSize: 32, fontFamily: 'Inter', fontWeight: '600', wordWrap: 'break-word'}}>Pagina principal<br/>Bienvenido a la pagina principal</div>
-    <div style={{width: '100vw', height: 'calc(100vh-40vh)', position: 'absolute',top:'40vh', background: '#8DBFF9'}} />
+    <div style={{width: 1512, height: 207, left: 0, top: 381, position: 'absolute', background: '#8DBFF9'}} />
     <div style={{left: 67, top: 435, position: 'absolute', color: 'black', fontSize: 32, fontFamily: 'Inter', fontWeight: '600', wordWrap: 'break-word'}}>Postulaciones</div>
     <div style={{width: 187, height: 42, left: 1188, top: 74, position: 'absolute'}}>
         <div style={{width: 187, height: 42, left: 0, top: 0, position: 'absolute', background: '#F77171', borderRadius: 12}} />
@@ -22,7 +21,7 @@ function Figma () {
         <div style={{width: 196, height: 50, left: 0, top: 0, position: 'absolute', background: '#D9D9D9', borderRadius: 12}} />
         <div style={{width: 169, height: 24, left: 14, top: 13, position: 'absolute', color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word'}}>Ver Postulaciones</div>
     </div>
-    <div style={{width: '100vw', height: 'calc(100vh - 60vh)', position: 'absolute', top:'60vh', background: '#F8FA8D'}} />
+    <div style={{width: 1512, height: 226, left: 0, top: 588, position: 'absolute', background: '#F8FA8D'}} />
     <div style={{width: 174.79, height: 50, left: 506, top: 733, position: 'absolute'}}>
         <div style={{width: 174.79, height: 50, left: 0, top: 0, position: 'absolute', background: '#6FE765', borderRadius: 12}} />
         <div style={{width: 155.48, left: 9.79, top: 13, position: 'absolute', color: 'black', fontSize: 20, fontFamily: 'Inter', fontWeight: '400', wordWrap: 'break-word'}}>Crear Beneficio</div>
