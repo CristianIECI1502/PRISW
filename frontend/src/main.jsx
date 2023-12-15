@@ -37,8 +37,13 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/forms/:_id',
-    element: <ForID/>,
+    path: '/',
+    element: <Root/>,
+    children: [{
+      path:'/forms/:_id',
+      element: <ForID />,
+    },
+    ],
   },
   {
     path: '/figma',

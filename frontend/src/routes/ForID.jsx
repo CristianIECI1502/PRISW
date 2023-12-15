@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getFormById, editForm } from "../services/form.service";
-import { Button, Center, Stack } from '@chakra-ui/react';
+import { Box, Button, Center, Heading, Stack, Text, VStack } from '@chakra-ui/react';
 import { ArrowForwardIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const ForID = () => {
     }, [_id]);
 
     const handleEvaluationClick = () => {
-        setShowEvaluationButtons(true);
+        setShowEvaluationButtons(prevState => !prevState); // Cambia el estado al valor opuesto del actual
     };
 
     const handleStatusChange = async (statusName) => {
@@ -48,46 +48,50 @@ const ForID = () => {
     };
     
     return (
-        <div>
+        <VStack minH="100vh" w="100%" spacing={0} bg={"white"}  >
             <Center>
             {/* muestra los datos del formulario aquí si existen */}
+            <Box maxW="80%">
             {form && (
                 <div>
-                    <h2>Nombre: {form.nombre}</h2>
-                    <p>RUT: {form.rut}</p>
-                    <p>Email: {form.email}</p>
-                    <p>N° TEF: +56{form.phoneNumber}</p>
-                    <p>Direccion: {form.address}</p>
-                    <p>Solicitud: {form.message}</p>
-                    <p>Estado: {form.status.name}</p>
-                    <Stack direction='row' spacing={4}>
-                        <Button leftIcon={<ArrowLeftIcon />} colorScheme='teal' variant='solid' onClick={(()=> navigate('/forms'))}>
-                            Volver a formularios
-                        </Button>
-                        <Button 
-                            rightIcon={<ArrowForwardIcon />} 
-                            colorScheme='teal' 
-                            variant='outline' 
-                            onClick={handleEvaluationClick}
-                            style={{ display: roleName === 'user' ? 'none' : 'inline-block' }}
-                        >
-                            Evaluar
-                        </Button>
-                        {showEvaluationButtons && (
-                            <Stack direction='row' spacing={4}>
-                                <Button colorScheme='red' variant='solid' onClick={() => handleStatusChange("Rechazado")}>
-                                    Rechazado
-                                </Button>
-                                <Button colorScheme='green' variant='solid' onClick={() => handleStatusChange("Aprobado")}>
-                                    Aprobado
-                                </Button>
-                            </Stack>
-                        )}
-                    </Stack>
+                    <VStack spacing={5}>
+                        <Heading as="h2" size="xl">Nombre: {form.nombre}</Heading>
+                        <Text fontSize="xl">RUT: {form.rut}</Text>
+                        <Text fontSize="xl">Email: {form.email}</Text>
+                        <Text fontSize="xl">N° TEF: +56{form.phoneNumber}</Text>
+                        <Text fontSize="xl">Direccion: {form.address}</Text>
+                        <Text fontSize="xl">Solicitud: {form.message}</Text>
+                        <Text fontSize="xl">Estado: {form.status.name}</Text>
+                        <Stack direction='row' spacing={4}>
+                            <Button leftIcon={<ArrowLeftIcon />} colorScheme='teal' variant='solid' onClick={(()=> navigate('/forms'))}>
+                                Volver a formularios
+                            </Button>
+                            <Button 
+                                rightIcon={<ArrowForwardIcon />} 
+                                colorScheme='teal' 
+                                variant='outline' 
+                                onClick={handleEvaluationClick}
+                                style={{ display: roleName === 'user' ? 'none' : 'inline-block' }}
+                            >
+                                Evaluar
+                            </Button>
+                            {showEvaluationButtons && (
+                                <Stack direction='row' spacing={4}>
+                                    <Button colorScheme='red' variant='solid' onClick={() => handleStatusChange("Rechazado")}>
+                                        Rechazado
+                                    </Button>
+                                    <Button colorScheme='green' variant='solid' onClick={() => handleStatusChange("Aprobado")}>
+                                        Aprobado
+                                    </Button>
+                                </Stack>
+                            )}
+                        </Stack>
+                    </VStack>
                 </div>
             )}
+            </Box>
             </Center>
-        </div>
+        </VStack>
     );
 };
 
