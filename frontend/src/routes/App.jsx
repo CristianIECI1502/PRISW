@@ -9,10 +9,11 @@ function App() {
       <Box>
         <h1>Pagina principal</h1>
         <h2>Bienvenido a la pagina principal</h2>
-        <Button borderRadius="md" onClick={(()=> navigate ("/forms"))}>Ver Postulaciones</Button>
+        <Button borderRadius="md" colorScheme='blue' onClick={(()=> navigate ("/forms"))}>Ver Postulaciones</Button>
+        <Button borderRadius="md" colorScheme='blue' onClick={(()=> navigate ("/beneficios"))}>Ver Beneficios</Button>
         <Button borderRadius="md" colorScheme='blue' size={"md"}>Button</Button>
         <Button onClick={toggleColorMode}>
-          Cambiar a {colorMode === "light" ? "Dark" : "Light"} Theme
+          Cambiar a Modo {colorMode === "light" ? "Dark" : "Light"} 
         </Button>
       </Box>
     </Center>
