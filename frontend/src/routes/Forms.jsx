@@ -117,7 +117,7 @@ const Forms = () => {
             <VStack bg={"#8DBFF9"}>
                 <Heading h1>Postulaciones:</Heading>
                 <Text>Lista de postulantes</Text>
-                <Input placeholder="Buscar por nombre, rut o estado" value={search} onChange={handleSearchChange} />
+                <Input placeholder="Buscar por nombre, rut o estado" value={search} onChange={handleSearchChange} bg={"white"} />
                 <Menu>
                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
                     Ordenar por
@@ -136,6 +136,7 @@ const Forms = () => {
                             <p>{form.nombre}</p>
                             <Badge colorScheme={getBadgeColor(form.status.name)}>Estado: {form.status.name}</Badge>
                             <p>Fecha de creación: {moment(form.dateSubmitted).format('DD/MM/YYYY')}</p>
+                            {console.log(form.dateModified)}
                             <p>Fecha de actualización: {moment(form.dateModified).format('DD/MM/YYYY')}</p>
                             <ButtonGroup>
                             <Button onClick={() => handleViewForm(form._id)}>Ver Peticion</Button>

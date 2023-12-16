@@ -4,6 +4,7 @@ import { getFormById, editForm } from "../services/form.service";
 import { Box, Button, Center, Heading, Stack, Text, VStack } from '@chakra-ui/react';
 import { ArrowForwardIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import { sendEmail } from '../services/email.service';
 
 const ForID = () => {
     const [form, setForm] = useState(null);
@@ -40,15 +41,23 @@ const ForID = () => {
         const response = await editForm(form._id, formData);
         if (response.state === 'Success') {
             setForm(response.data);
+
+            // Envía un correo de notificación
+            const emailResponse = await sendEmail(form.email, statusName);
+            if (emailResponse.state === 'Success') {
+                console.log('Correo de notificación enviado con éxito');
+            } else {
+                console.error('Error al enviar el correo de notificación');
+            }
+
             window.location.reload(); // Refresca la página
             window.alert(`Estado cambiado a ${statusName}`); // Muestra una alerta
         } else {
             console.error(response.message);
         }
     };
-    
     return (
-        <VStack minH="100vh" w="100%" spacing={0} bg={"white"}  >
+        <VStack minH="100vh" w="100%" spacing={0} bg={"#8DBFF9"}  >
             <Center>
             {/* muestra los datos del formulario aquí si existen */}
             <Box maxW="80%">

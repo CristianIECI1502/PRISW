@@ -94,23 +94,23 @@ const CrForm = () => {
     });
 
     return (
-        <Box p={5}>
+        <Box p={5} bg={"#8DBFF9"}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl id="nombre" isRequired isInvalid={formik.errors.nombre && formik.touched.nombre}>
                     <FormLabel>Nombre</FormLabel>
-                    <Input placeholder='Juan Perez' type="text" {...formik.getFieldProps('nombre')} />
+                    <Input placeholder='Juan Perez' type="text" {...formik.getFieldProps('nombre')} bg={"white"} />
                     <FormErrorMessage>{formik.errors.nombre}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl id="rut" mt={4} isRequired isInvalid={formik.errors.rut && formik.touched.rut}>
                     <FormLabel>RUT</FormLabel>
-                    <Input placeholder='11.111.111-1' type="text" {...formik.getFieldProps('rut')} />
+                    <Input placeholder='11.111.111-1' type="text" {...formik.getFieldProps('rut')} bg={"white"} />
                     <FormErrorMessage>{formik.errors.rut}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl id="correo" mt={4} isRequired isInvalid={formik.errors.email && formik.touched.email}>
                     <FormLabel>Correo</FormLabel>
-                    <Input placeholder='Tu_Correo@email.com' type="email" {...formik.getFieldProps('email')} />
+                    <Input placeholder='Tu_Correo@email.com' type="email" {...formik.getFieldProps('email')} bg={"white"} />
                     <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
                 </FormControl>
 
@@ -118,20 +118,20 @@ const CrForm = () => {
                     <FormLabel>Número de Teléfono</FormLabel>
                     <InputGroup>
                         <InputLeftAddon>+56</InputLeftAddon>
-                        <Input placeholder='912345678' type="tel" {...formik.getFieldProps('phoneNumber')} />
+                        <Input placeholder='912345678' type="tel" {...formik.getFieldProps('phoneNumber')} bg={"white"} />
                     </InputGroup>
                     <FormErrorMessage>{formik.errors.phoneNumber}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl id="direccion" mt={4} isRequired isInvalid={formik.errors.address && formik.touched.address}>
                     <FormLabel>Dirección</FormLabel>
-                    <Input placeholder='Rio #111' type="text" {...formik.getFieldProps('address')} />
+                    <Input placeholder='Rio #111' type="text" {...formik.getFieldProps('address')} bg={"white"} />
                     <FormErrorMessage>{formik.errors.address}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl id="mensaje" mt={4} isRequired isInvalid={formik.errors.message && formik.touched.message}>
                     <FormLabel>Mensaje de Solicitud</FormLabel>
-                    <Textarea placeholder='Describa por que quiere la tarjeta vecina' {...formik.getFieldProps('message')} />
+                    <Textarea placeholder='Describa por que quiere la tarjeta vecina' {...formik.getFieldProps('message')} bg={"white"} />
                 </FormControl>
 
                 <FormControl id="submit" mt={4} isInvalid={formik.errors.submit}>
