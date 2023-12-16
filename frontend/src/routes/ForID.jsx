@@ -60,13 +60,13 @@ const ForID = () => {
         <VStack minH="100vh" w="100%" spacing={0} bg={"#8DBFF9"}  >
             <Center>
             {/* muestra los datos del formulario aquí si existen */}
-            <Box maxW="80%">
+            <Box>
             {form && (
-                <div>
+                <Box>
                     <VStack spacing={5}>
                         <Heading as="h2" size="xl">Nombre: {form.nombre}</Heading>
                         <Text fontSize="xl">RUT: {form.rut}</Text>
-                        <Text fontSize="xl">Email: {form.email}</Text>
+                        <Text fontSize="xl" style={{ wordBreak: 'break-all' }}>Email: {form.email}</Text>
                         <Text fontSize="xl">N° TEF: +56{form.phoneNumber}</Text>
                         <Text fontSize="xl">Direccion: {form.address}</Text>
                         <Text fontSize="xl">Solicitud: {form.message}</Text>
@@ -96,7 +96,7 @@ const ForID = () => {
                             )}
                         </Stack>
                     </VStack>
-                </div>
+                </Box>
             )}
             </Box>
             </Center>

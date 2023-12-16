@@ -23,7 +23,7 @@ async function sendEmail(email, status) {
             from: "correo.prueba06@outlook.com",
             to: email,
             subject: "Notificación de cambio de estado",
-            text: `El estado ha cambiado a ${status}`,
+            text: `El estado de su postulacion ha cambiado a ${status}`,
         };
 
         return await transporter.sendMail(mailOptions);
