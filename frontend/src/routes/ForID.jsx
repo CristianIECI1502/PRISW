@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getFormById, editForm } from "../services/form.service";
-import { Box, Button, Center, Heading, Stack, Text, VStack } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Center, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Stack, Text, VStack } from '@chakra-ui/react';
 import { ArrowForwardIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import { sendEmail } from '../services/email.service';
 
 const ForID = () => {
     const [form, setForm] = useState(null);
-    const [showEvaluationButtons, setShowEvaluationButtons] = useState(false);
     const [roleName, setRoleName] = useState(''); // Agrega un estado para roleName
     const { _id } = useParams();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [alertStatus, setAlertStatus] = useState(null);
 
     useEffect(() => {
         const fetchForm = async () => {
@@ -31,10 +33,15 @@ const ForID = () => {
     }, [_id]);
 
     const handleEvaluationClick = () => {
-        setShowEvaluationButtons(prevState => !prevState); // Cambia el estado al valor opuesto del actual
+        setIsOpen(true);
+    };
+
+    const handleClose = () => {
+        setIsOpen(false);
     };
 
     const handleStatusChange = async (statusName) => {
+        setIsLoading(true);
         const formData = {
             status: statusName,
         };
@@ -50,12 +57,20 @@ const ForID = () => {
                 console.error('Error al enviar el correo de notificación');
             }
 
-            window.location.reload(); // Refresca la página
-            window.alert(`Estado cambiado a ${statusName}`); // Muestra una alerta
+            // Refresca la página después de un retraso de 3 segundos
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000);
         } else {
             console.error(response.message);
         }
+        setIsLoading(false);
+        setIsOpen(false);
+        setAlertStatus(statusName);
     };
+
+
+    
     return (
         <VStack minH="100vh" w="100%" spacing={0} bg={"#8DBFF9"}  >
             <Center>
@@ -84,18 +99,32 @@ const ForID = () => {
                             >
                                 Evaluar
                             </Button>
-                            {showEvaluationButtons && (
-                                <Stack direction='row' spacing={4}>
-                                    <Button colorScheme='red' variant='solid' onClick={() => handleStatusChange("Rechazado")}>
-                                        Rechazado
-                                    </Button>
-                                    <Button colorScheme='green' variant='solid' onClick={() => handleStatusChange("Aprobado")}>
-                                        Aprobado
-                                    </Button>
-                                </Stack>
-                            )}
+                            <Modal isOpen={isOpen} onClose={handleClose}>
+                                <ModalOverlay />
+                                <ModalContent>
+                                    <ModalHeader>Como evaluaria esta postulacion</ModalHeader>
+                                    <ModalCloseButton />
+                                    <ModalBody>
+                                        <Stack direction='row' spacing={4}>
+                                            <Button isLoading={isLoading} colorScheme='red' variant='solid' onClick={() => handleStatusChange("Rechazado")}>
+                                                Rechazado
+                                            </Button>
+                                            <Button isLoading={isLoading} colorScheme='green' variant='solid' onClick={() => handleStatusChange("Aprobado")}>
+                                                Aprobado
+                                            </Button>
+                                        </Stack>
+                                    </ModalBody>
+                                </ModalContent>
+                            </Modal>
                         </Stack>
                     </VStack>
+                    {alertStatus && (
+                        <Alert status="success">
+                            <AlertIcon />
+                            <AlertTitle mr={2}>Estado cambiado a {alertStatus}!</AlertTitle>
+                            <AlertDescription>Correo de notificación enviado.</AlertDescription>
+                        </Alert>
+                    )}
                 </Box>
             )}
             </Box>

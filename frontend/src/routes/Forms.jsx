@@ -47,6 +47,9 @@ const Forms = () => {
                     case 'name':
                         sortedData = response.data.sort((a, b) => a.nombre.localeCompare(b.nombre));
                         break;
+                    case 'modifiedDate':
+                        sortedData = response.data.sort((a, b) => new Date(a.modifiedDate) - new Date(b.modifiedDate));
+                        break;
                     default:
                         sortedData = response.data;
                 }
@@ -57,7 +60,7 @@ const Forms = () => {
         };
 
         fetchData();
-    }, [sortType]); // Agrega sortType como dependencia
+    }); // Agrega sortType como dependencia
     const handleViewForm = async (_id) => {
         if (_id) { // Asegúrate de que _id existe y no es undefined
             const result = await getFormById(_id);
@@ -123,9 +126,10 @@ const Forms = () => {
                     Ordenar por
                 </MenuButton>
                 <MenuList>
-                    <MenuItem onClick={() => setSortType('date')}>Fecha</MenuItem>
-                    <MenuItem onClick={() => setSortType('status')}>Estado</MenuItem>
                     <MenuItem onClick={() => setSortType('name')}>Nombre</MenuItem>
+                    <MenuItem onClick={() => setSortType('status')}>Estado</MenuItem>
+                    <MenuItem onClick={() => setSortType('date')}>Fecha de creación</MenuItem>
+                    <MenuItem onClick={() => setSortType('modifiedDate')}>Fecha de actualización</MenuItem>
                 </MenuList>
             </Menu>
                 <Box>

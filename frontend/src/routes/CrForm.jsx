@@ -21,7 +21,10 @@ const CrForm = () => {
         console.log('handleSubmit called with values:', values);
         try {
             await createForm(values);
-            navigate('/success'); // navigate to success page after successful form submission
+            // Mostrar una alerta y luego redirigir a '/'
+            if (window.confirm('Formulario enviado con éxito. Haz clic en "Aceptar" para volver a la página principal.')) {
+                navigate('/'); // navigate to home page after successful form submission
+            }
         } catch (error) {
             console.log('Error response:', error.response); // Agrega esto para ver la respuesta de error
             if (error.response && error.response.status === 400 && error.response.data.message === 'El postulante ya existe') {

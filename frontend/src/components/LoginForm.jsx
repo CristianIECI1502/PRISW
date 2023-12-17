@@ -37,7 +37,7 @@ function LoginForm() {
           </FormErrorMessage>
         </FormControl>
     
-        <Button mt={4} colorScheme="teal" isLoading={onSubmit} type="submit">
+        <Button mt={4} colorScheme="teal" onClick={onSubmit} type="submit">
           Iniciar sesión
         </Button>
       </form>
