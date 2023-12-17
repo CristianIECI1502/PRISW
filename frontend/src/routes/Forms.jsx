@@ -60,7 +60,7 @@ const Forms = () => {
         };
 
         fetchData();
-    }); // Agrega sortType como dependencia
+    },[sortType]); // Agrega sortType como dependencia
     const handleViewForm = async (_id) => {
         if (_id) { // Asegúrate de que _id existe y no es undefined
             const result = await getFormById(_id);
@@ -140,7 +140,6 @@ const Forms = () => {
                             <p>{form.nombre}</p>
                             <Badge colorScheme={getBadgeColor(form.status.name)}>Estado: {form.status.name}</Badge>
                             <p>Fecha de creación: {moment(form.dateSubmitted).format('DD/MM/YYYY')}</p>
-                            {console.log(form.dateModified)}
                             <p>Fecha de actualización: {moment(form.dateModified).format('DD/MM/YYYY')}</p>
                             <ButtonGroup>
                             <Button onClick={() => handleViewForm(form._id)}>Ver Peticion</Button>
