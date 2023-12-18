@@ -8,7 +8,7 @@ import ErrorPage from './routes/ErrorPage.jsx';
 import Login from './routes/Login.jsx';
 import Forms from './routes/Forms.jsx';
 import ForID from './routes/ForID.jsx';
-import Figma from './routes/figma.jsx';
+import CrForm from './routes/CrForm.jsx';
 import Beneficios from './routes/Beneficio.jsx';
 import CrBeneficio from './routes/CrBeneficio.jsx';
 import EdBeneficio from './routes/EdBeneficio.jsx';
@@ -39,12 +39,22 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '/forms/:_id',
-    element: <ForID/>,
+    path: '/',
+    element: <Root/>,
+    children: [{
+      path:'/forms/:_id',
+      element: <ForID />,
+    },
+    ],
   },
   {
-    path: '/figma',
-    element: <Figma/>,
+    path: '/',
+    element: <Root/>,
+    children: [{
+      path:'/postF',
+      element: <CrForm />,
+    },
+    ],
   },
   {
     path: '/beneficios',

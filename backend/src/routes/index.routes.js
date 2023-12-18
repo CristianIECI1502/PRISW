@@ -11,6 +11,9 @@ const authRoutes = require("./auth.routes.js");
 /** Enrutador de formularios */
 const formRoutes = require("./form.routes.js");
 
+/** Enrutador de correo electrónico */
+const emailRoutes = require("./email.routes.js"); // Asegúrate de que la ruta sea correcta
+
 /** Middleware de autenticación */
 const authenticationMiddleware = require("../middlewares/authentication.middleware.js");
 
@@ -23,6 +26,9 @@ router.use("/users", authenticationMiddleware, userRoutes);
 router.use("/auth", authRoutes);
 // Define las rutas para los formularios /api/forms
 router.use("/forms", authenticationMiddleware, formRoutes);
+// Define las rutas para los correos electrónicos /api/email
+// Asegúrate de que la ruta sea correcta
+router.use("/email", authenticationMiddleware, emailRoutes); 
 
 // Exporta el enrutador
 module.exports = router;

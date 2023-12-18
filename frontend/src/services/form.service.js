@@ -69,18 +69,20 @@ export const editForm = async (id, formData) => {
 };
 
 export const createForm = async (formData) => {
+    console.log('createForm called with formData:', formData);
     try {
         const response = await axios.post('forms/', formData);
         const { status, data } = response;
-        if (status === 200) {
-            console.log(data);
+        console.log('Server response:', response);
+        if (status === 201) {
+            console.log('Server returned status 200, data:', data);
             return { state: 'Success', data: data.data };
         } else {
             console.error('Server did not return the expected data');
-            return { state: 'Error' };
+            throw new Error('Server did not return the expected data');
         }
     } catch (error) {
-        console.error(error);
-        return { state: 'Error' };
+        console.error('Error in createForm:', error);
+        throw error;
     }
 };

@@ -30,6 +30,7 @@ async function getForms(filters) {
             .select("nombre")
             .select("rut")
             .populate("dateSubmitted")
+            .populate("dateModified")
             .populate("status", "name -_id")
             .exec();
 
