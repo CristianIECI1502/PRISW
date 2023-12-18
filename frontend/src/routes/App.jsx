@@ -19,7 +19,10 @@ function App() {
         </Center>
       </Box>
       <Box bg={"#F8FA8D"} flex={1}>
-        <Heading>Beneficios</Heading>
+        <Heading mb={20}>Beneficios</Heading>
+        <Center>
+          <Button borderRadius="md" colorScheme='blue' onClick={(()=> navigate ("/beneficios"))}>Ver Beneficios</Button>
+        </Center>
       </Box>
       <Box bg={"#B48CD4"} >
         <Text onClick={(()=> navigate("/success"))}>saber mas</Text>

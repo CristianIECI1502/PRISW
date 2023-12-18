@@ -3,7 +3,7 @@
 const express = require("express");
 
 /** Controlador de autenticación */
-const authController = require("../controllers/auth.controller.js");
+const authController = require("../controllers/auth.controller");
 
 /** Instancia del enrutador */
 const router = express.Router();

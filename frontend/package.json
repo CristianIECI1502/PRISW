@@ -15,6 +15,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "axios": "^1.5.1",
+    "formik": "^2.4.5",
     "framer-motion": "^10.16.16",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",

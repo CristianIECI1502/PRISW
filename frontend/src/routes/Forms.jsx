@@ -48,7 +48,7 @@ const Forms = () => {
                         sortedData = response.data.sort((a, b) => a.nombre.localeCompare(b.nombre));
                         break;
                     case 'modifiedDate':
-                        sortedData = response.data.sort((a, b) => new Date(a.modifiedDate) - new Date(b.modifiedDate));
+                        sortedData = response.data.sort((a, b) => moment(a.modifiedDate).diff(moment(b.modifiedDate)));
                         break;
                     default:
                         sortedData = response.data;
