@@ -91,7 +91,14 @@ async function updateBeneficio(req, res) {
     if (paramsError) return respondError(req, res, 400, paramsError.message);
     if (bodyError) return respondError(req, res, 400, bodyError.message);
 
-    const [beneficio, beneficioError] = await beneficioService.updateBeneficio(params.id, body);
+    const result = await beneficioService.updateBeneficio(params.id, body);
+
+    // Comprueba si el resultado es undefined o null
+    if (!result || result.length !== 2) {
+      return respondError(req, res, 500, "No se pudo actualizar el beneficio");
+    }
+
+    const [beneficio, beneficioError] = result;
 
     if (beneficioError) return respondError(req, res, 400, beneficioError);
 

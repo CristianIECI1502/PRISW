@@ -13,7 +13,6 @@ const noSymbolsRegex = /^[a-zA-Z0-9 ]*$/;
  */
 const beneficioBodySchema = Joi.object({
     beneficioname: Joi.string()
-        .required()
         .max(20)
         .pattern(noSymbolsRegex)
         .messages({
@@ -24,7 +23,6 @@ const beneficioBodySchema = Joi.object({
             "string.pattern.base": "El nombre de beneficio no puede contener símbolos.",
         }),
     descripcion: Joi.string()
-        .required()
         .min(5)
         .max(30)
         .pattern(noSymbolsRegex)
@@ -37,7 +35,6 @@ const beneficioBodySchema = Joi.object({
             "string.pattern.base": "La descripción no puede contener símbolos.",
         }),
     empresaAsociada: Joi.string()
-        .required()
         .max(20)
         .pattern(noSymbolsRegex)
         .messages({
@@ -48,7 +45,6 @@ const beneficioBodySchema = Joi.object({
             "string.pattern.base": "El nombre de la empresa o tienda no puede contener símbolos.",
         }),
     descuento: Joi.number()
-        .required()
         .min(0)
         .max(100)
         .messages({
@@ -58,19 +54,17 @@ const beneficioBodySchema = Joi.object({
             "number.max": "El descuento no puede ser mayor que 100.",
         }),
     fechaInicio: Joi.date()
-        .required()
         .messages({
             "date.base": "La fecha de inicio debe ser de tipo fecha.",
             "any.required": "La fecha de inicio es obligatoria.",
         }),
     fechaFin: Joi.date()
-        .required()
         .messages({
             "date.base": "La fecha de fin debe ser de tipo fecha.",
             "any.required": "La fecha de fin es obligatoria.",
         }),
 }).messages({
-    "object.unknown": "No se permiten propiedades adicionales.",
+    "object.unknown": "No se permiten propiedades adicionales",
 });
 
 /**
