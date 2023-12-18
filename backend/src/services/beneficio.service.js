@@ -33,19 +33,6 @@ async function createBeneficio(beneficio) {
     const { beneficioname, descripcion, empresaAsociada, 
            descuento, fechaInicio, fechaFin } = beneficio;
 
-    // Validaciones
-    if (!noSymbolsRegex.test(beneficioname)) {
-      return [null, "El nombre de beneficio no puede contener símbolos."];
-    }
-
-    if (!noSymbolsRegex.test(descripcion)) {
-      return [null, "La descripción no puede contener símbolos."];
-    }
-
-    if (!noSymbolsRegex.test(empresaAsociada)) {
-      return [null, "El nombre de la empresa o tienda no puede contener símbolos."];
-    }
-
     const beneficioFound = await Beneficio.findOne({ beneficioname });
     if (beneficioFound) return [null, "El beneficio ya existe"];
 
@@ -91,10 +78,18 @@ async function getBeneficioById(id) {
  */
 async function updateBeneficio(id, beneficio) {
   try {
+    console.log("ID del beneficio:", id); // Verificar el ID del beneficio
     const beneficioFound = await Beneficio.findById(id);
+    console.log("Beneficio encontrado:", beneficioFound);
+  
+    // Verificar si el beneficio se encontró correctamente
     if (!beneficioFound) return [null, "El beneficio no existe"];
 
-    const { beneficioname, descripcion } = beneficio;
+    const { beneficioname, descripcion, empresaAsociada, 
+      descuento, fechaInicio, fechaFin } = beneficio;
+    console.log("Datos del beneficio:", beneficioname, 
+    descripcion, empresaAsociada, descuento, fechaInicio, fechaFin); 
+    // Verificar los datos del beneficio
 
     // Validaciones
     if (!noSymbolsRegex.test(beneficioname)) {
@@ -110,13 +105,21 @@ async function updateBeneficio(id, beneficio) {
       {
         beneficioname,
         descripcion,
+        empresaAsociada,
+        descuento,
+        fechaInicio,
+        fechaFin,
       },
-      { new: true },
+      { new: true }, // Esta opción hace que findByIdAndUpdate devuelva el documento actualizado
     );
+    console.log("Beneficio actualizado:", beneficioUpdated); // Verificar el beneficio actualizado
 
+    // Devuelve el beneficio actualizado y null como error
     return [beneficioUpdated, null];
   } catch (error) {
-    handleError(error, "beneficio.service -> updateBeneficio");
+    console.log("Error:", error); // Capturar cualquier error que pueda ocurrir durante la ejecución
+    // Devuelve null como beneficio y el error
+    return [null, error];
   }
 }
 

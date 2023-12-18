@@ -10,6 +10,8 @@ import Forms from './routes/Forms.jsx';
 import ForID from './routes/ForID.jsx';
 import Figma from './routes/figma.jsx';
 import Beneficios from './routes/Beneficio.jsx';
+import CrBeneficio from './routes/CrBeneficio.jsx';
+import EdBeneficio from './routes/EdBeneficio.jsx';
 
 const router = createBrowserRouter([
   {
@@ -47,8 +49,25 @@ const router = createBrowserRouter([
   {
     path: '/beneficios',
     element: <Beneficios />,
+  },
+  {
+    path: '/',
+    element: <Root/>,
+    children: [{
+      path:'/postB',
+      element: <CrBeneficio />,
+    },
+    ],
+  },
+  {
+    path: '/',
+    element: <Root/>,
+    children: [{
+      path:'/beneficios/Edbeneficio/:_id',
+      element: <EdBeneficio />,
+    },
+    ],
   }
-
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

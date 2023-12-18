@@ -19,7 +19,7 @@ export const getBeneficios = async (userId = '6539cf25ec3418d30d60d02f') => {
 
 export const getBeneficioById = async (id) => {
     try {
-        const response = await axios.get(`beneficios/${id}`);
+        const response = await axios.get(`/users/6539cf25ec3418d30d60d02f/beneficio/${id}`);
         const { status, data } = response;
         if (status === 200) {
             console.log(data);
@@ -36,7 +36,7 @@ export const getBeneficioById = async (id) => {
 
 export const deleteBeneficio = async (id) => {
     try {
-        const response = await axios.delete(`beneficios/${id}`);
+        const response = await axios.delete(`/users/6539cf25ec3418d30d60d02f/beneficio/${id}`);
         const { status } = response;
         if (status === 200) {
             return { state: 'Success' };
@@ -53,7 +53,7 @@ export const deleteBeneficio = async (id) => {
 export const editBeneficio = async (id, beneficioData) => {
     try {
         console.log(beneficioData);
-        const response = await axios.put(`beneficios/${id}`, beneficioData);
+        const response = await axios.put(`/users/6539cf25ec3418d30d60d02f/beneficio/${id}`, beneficioData);
         const { status, data } = response;
         if (status === 200) {
             console.log(data);
@@ -70,7 +70,7 @@ export const editBeneficio = async (id, beneficioData) => {
 
 export const createBeneficio = async (beneficioData) => {
     try {
-        const response = await axios.post('beneficios/', beneficioData);
+        const response = await axios.post('/users/6539cf25ec3418d30d60d02f/beneficio/', beneficioData);
         const { status, data } = response;
         if (status === 200) {
             console.log(data);
