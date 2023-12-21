@@ -1,0 +1,5 @@
+PORT=443
+HOST=146.83.198.45
+DB_URL=mongodb+srv://felipe:z78uALwj94HZxcAY@cluster0.rxop5j8.mongodb.net/?retryWrites=true&w=majority
+ACCESS_JWT_SECRET=qwertyuiop
+REFRESH_JWT_SECRET=poiuytrewq

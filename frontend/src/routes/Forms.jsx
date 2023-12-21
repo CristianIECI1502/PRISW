@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getForms, getFormById, deleteForm } from "../services/form.service";
-import { Badge, Box, Button, ButtonGroup, Heading, Input, Menu, MenuButton, MenuItem, MenuList, Text, VStack } from '@chakra-ui/react'
+import { Badge, Box, Button, ButtonGroup, Container, Heading, Input, Menu, MenuButton, MenuItem, MenuList, Text, VStack } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { ChevronDownIcon } from '@chakra-ui/icons';
@@ -132,7 +132,7 @@ const Forms = () => {
                     <MenuItem onClick={() => setSortType('modifiedDate')}>Fecha de actualización</MenuItem>
                 </MenuList>
             </Menu>
-                <Box>
+                <Container background={"cyan.500"}borderRadius={"20px"}>
                     {filteredForms.map((form, index) => (
                     <div key={index}>
                         <Box>
@@ -141,7 +141,7 @@ const Forms = () => {
                             <Badge colorScheme={getBadgeColor(form.status.name)}>Estado: {form.status.name}</Badge>
                             <p>Fecha de creación: {moment(form.dateSubmitted).format('DD/MM/YYYY')}</p>
                             <p>Fecha de actualización: {moment(form.dateModified).format('DD/MM/YYYY')}</p>
-                            <ButtonGroup>
+                            <ButtonGroup spacing={"100px"}>
                             <Button onClick={() => handleViewForm(form._id)}>Ver Peticion</Button>
                             {form.status.name.toLowerCase() === 'rechazado' && roleName !== 'user' && (
                                 <Button onClick={() => handleDeleteForm(form._id)}colorScheme='red'>Eliminar Formulario</Button>
@@ -150,7 +150,7 @@ const Forms = () => {
                         </Box>
                     </div>
                 ))}
-                </Box>
+                </Container>
                 <Button onClick={(()=> navigate('/'))}>volver al inicio</Button>
             </VStack>
         </div>

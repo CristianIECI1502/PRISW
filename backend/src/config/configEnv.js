@@ -4,7 +4,7 @@ const path = require("path");
 
 /**  Obtiene la ruta absoluta del archivo .env. */
 const envFilePath = path.resolve(__dirname, ".env");
-
+console.log(__dirname);
 // Carga las variables de entorno desde el archivo .env
 require("dotenv").config({ path: envFilePath });
 
